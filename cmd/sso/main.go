@@ -5,8 +5,11 @@ import (
 	"log"
 	"log/slog"
 	"os"
+	"os/signal"
+	"sso-grpc-ntc/internal/app"
 	"sso-grpc-ntc/internal/config"
 	"sso-grpc-ntc/pkg/logger/handlers/slogpretty"
+	"syscall"
 )
 
 const (
@@ -26,11 +29,24 @@ func main() {
 
 	log := setupLogger(cfg.Env)
 
-	log.Info("Запуск приложения")
+	log.Info("запуск приложения")
 
-	// TODO: инициализировать приложение (app)
+	a := app.New(log, cfg.GRPC.Port, cfg.StoragePath, cfg.TokenTTL)
 
-	// TODO: запустить gRPC-сервер приложения
+	go a.GRPCServer.MustRun()
+
+	// Graceful shutdown
+
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
+
+	sign := <-stop
+
+	log.Info("остановка приложения", slog.String("signal", sign.String()))
+
+	a.GRPCServer.Stop()
+
+	log.Info("приложение остановленно")
 }
 
 // setupLogger Создаёт логгера в зависимости от окружения
