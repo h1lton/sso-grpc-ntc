@@ -1,10 +1,10 @@
 version: "3"
 
 tasks:
-  generate:
+  protoc-gen-go:
     aliases:
       - gen
-    desc: "Generate code from proto files"
+    desc: "Генерирует код на go для gRPC"
     cmds:
       - protoc
         -I api/proto
@@ -13,3 +13,11 @@ tasks:
         --go-grpc_out=./pkg/api
         --go-grpc_opt=paths=source_relative
         ./api/proto/*.proto
+  migrate:
+    desc: "
+    Просматривает текущую активную версию миграции 
+    и выполняет миграцию до конца
+    (применяя все миграции вверх).
+    "
+    cmds:
+      - ./migrator --storage-path ./storage/sso.db --migrations-path ./migrations
