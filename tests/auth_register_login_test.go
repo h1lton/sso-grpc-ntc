@@ -87,6 +87,48 @@ func TestRegisterLogin_DuplicatedRegistration(t *testing.T) {
 	assert.ErrorContains(t, err, "Пользователь уже существует")
 }
 
+func TestRegister_FailCases(t *testing.T) {
+	c, st := suite.New(t)
+
+	tests := []struct {
+		name        string
+		email       string
+		password    string
+		expectedErr string
+	}{
+		{
+			name:        "Регистрация с пустым паролем",
+			email:       gofakeit.Email(),
+			password:    "",
+			expectedErr: "пароль не указан",
+		},
+		{
+			name:        "Регистрация с пустым email",
+			email:       "",
+			password:    randomPassword(),
+			expectedErr: "email не указан",
+		},
+		{
+			name:        "Регистрация со всеми пустыми полями",
+			email:       "",
+			password:    "",
+			expectedErr: "email не указан",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := st.AuthClient.Register(c, &ssov1.RegisterRequest{
+				Email:    tt.email,
+				Password: tt.password,
+			})
+			require.Error(t, err)
+			require.Contains(t, err.Error(), tt.expectedErr)
+
+		})
+	}
+}
+
 func randomPassword() string {
 	return gofakeit.Password(
 		true,
