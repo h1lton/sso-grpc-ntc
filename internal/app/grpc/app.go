@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net"
 	authgrpc "sso-grpc-ntc/internal/grpc/auth"
+	"sso-grpc-ntc/pkg/operr"
 )
 
 type App struct {
@@ -38,13 +39,13 @@ func (a App) Run() error {
 
 	l, err := net.Listen("tcp", fmt.Sprintf(":%d", a.port))
 	if err != nil {
-		return fmt.Errorf("%s: %w", op, err)
+		return operr.Error(op, err)
 	}
 
 	log.Info("gRPC-сервер запущен", slog.String("addr", l.Addr().String()))
 
 	if err = a.gRPCServer.Serve(l); err != nil {
-		return fmt.Errorf("%s: %w", op, err)
+		return operr.Error(op, err)
 	}
 
 	return nil
