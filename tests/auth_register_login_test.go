@@ -65,6 +65,28 @@ func TestRegisterLogin_Login_HappyPath(t *testing.T) {
 	)
 }
 
+func TestRegisterLogin_DuplicatedRegistration(t *testing.T) {
+	c, st := suite.New(t)
+
+	email := gofakeit.Email()
+	password := gofakeit.Email()
+
+	respReg, err := st.AuthService.Register(c, &ssov1.RegisterRequest{
+		Email:    email,
+		Password: password,
+	})
+	require.NoError(t, err)
+	assert.NotEmpty(t, respReg.GetUserId())
+
+	respReg, err = st.AuthService.Register(c, &ssov1.RegisterRequest{
+		Email:    email,
+		Password: password,
+	})
+	require.Error(t, err)
+	assert.Empty(t, respReg.GetUserId())
+	assert.ErrorContains(t, err, "Пользователь уже существует")
+}
+
 func randomPassword() string {
 	return gofakeit.Password(
 		true,
