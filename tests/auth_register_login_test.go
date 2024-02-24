@@ -23,14 +23,14 @@ func TestRegisterLogin_Login_HappyPath(t *testing.T) {
 	email := gofakeit.Email()
 	password := randomPassword()
 
-	respReg, err := st.AuthService.Register(c, &ssov1.RegisterRequest{
+	respReg, err := st.AuthClient.Register(c, &ssov1.RegisterRequest{
 		Email:    email,
 		Password: password,
 	})
 	require.NoError(t, err)
 	assert.NotEmpty(t, respReg.GetUserId())
 
-	respLogin, err := st.AuthService.Login(c, &ssov1.LoginRequest{
+	respLogin, err := st.AuthClient.Login(c, &ssov1.LoginRequest{
 		Email:    email,
 		Password: password,
 		AppId:    appID,
@@ -71,14 +71,14 @@ func TestRegisterLogin_DuplicatedRegistration(t *testing.T) {
 	email := gofakeit.Email()
 	password := gofakeit.Email()
 
-	respReg, err := st.AuthService.Register(c, &ssov1.RegisterRequest{
+	respReg, err := st.AuthClient.Register(c, &ssov1.RegisterRequest{
 		Email:    email,
 		Password: password,
 	})
 	require.NoError(t, err)
 	assert.NotEmpty(t, respReg.GetUserId())
 
-	respReg, err = st.AuthService.Register(c, &ssov1.RegisterRequest{
+	respReg, err = st.AuthClient.Register(c, &ssov1.RegisterRequest{
 		Email:    email,
 		Password: password,
 	})

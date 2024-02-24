@@ -15,8 +15,8 @@ const grpcHost = "localhost"
 
 type Suite struct {
 	*testing.T
-	Cfg         *config.Config
-	AuthService ssov1.AuthClient
+	Cfg        *config.Config
+	AuthClient ssov1.AuthClient
 }
 
 func New(t *testing.T) (context.Context, *Suite) {
@@ -42,9 +42,9 @@ func New(t *testing.T) (context.Context, *Suite) {
 	}
 
 	return ctx, &Suite{
-		T:           t,
-		Cfg:         cfg,
-		AuthService: ssov1.NewAuthClient(cc),
+		T:          t,
+		Cfg:        cfg,
+		AuthClient: ssov1.NewAuthClient(cc),
 	}
 }
 
