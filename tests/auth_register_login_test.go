@@ -15,6 +15,7 @@ const (
 	appID         = 1
 	appSecret     = "test-secret"
 	pssDefaultLen = 10
+	emptyAppID    = 0
 )
 
 func TestRegisterLogin_Login_HappyPath(t *testing.T) {
@@ -125,6 +126,72 @@ func TestRegister_FailCases(t *testing.T) {
 			require.Error(t, err)
 			require.Contains(t, err.Error(), tt.expectedErr)
 
+		})
+	}
+}
+
+func TestLogin_FailCases(t *testing.T) {
+	ctx, st := suite.New(t)
+
+	tests := []struct {
+		name        string
+		email       string
+		password    string
+		appID       int32
+		expectedErr string
+	}{
+		{
+			name:        "Логин с пустым паролем",
+			email:       gofakeit.Email(),
+			password:    "",
+			appID:       appID,
+			expectedErr: "пароль не указан",
+		},
+		{
+			name:        "Логин с пустым email",
+			email:       "",
+			password:    randomPassword(),
+			appID:       appID,
+			expectedErr: "email не указан",
+		},
+		{
+			name:        "Логин с пустым email и паролем",
+			email:       "",
+			password:    "",
+			appID:       appID,
+			expectedErr: "email не указан",
+		},
+		{
+			name:        "Логин несуществующего пользователя",
+			email:       gofakeit.Email(),
+			password:    randomPassword(),
+			appID:       appID,
+			expectedErr: "Неправильный email или пароль",
+		},
+		{
+			name:        "Логин без AppID",
+			email:       gofakeit.Email(),
+			password:    randomPassword(),
+			appID:       emptyAppID,
+			expectedErr: "app id не указан",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+				Email:    gofakeit.Email(),
+				Password: randomPassword(),
+			})
+			require.NoError(t, err)
+
+			_, err = st.AuthClient.Login(ctx, &ssov1.LoginRequest{
+				Email:    tt.email,
+				Password: tt.password,
+				AppId:    tt.appID,
+			})
+			require.Error(t, err)
+			require.Contains(t, err.Error(), tt.expectedErr)
 		})
 	}
 }
