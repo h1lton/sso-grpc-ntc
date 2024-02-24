@@ -13,6 +13,7 @@ tasks:
         --go-grpc_out=./pkg/api
         --go-grpc_opt=paths=source_relative
         ./api/proto/*.proto
+
   migrate:
     desc: "
     Просматривает текущую активную версию миграции 
