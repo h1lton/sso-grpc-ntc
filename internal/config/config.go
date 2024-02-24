@@ -32,6 +32,11 @@ func MustLoad() *Config {
 		panic("Не указан путь к конфигу")
 	}
 
+	return MustLoadByPath(path)
+}
+
+// MustLoadByPath загружает конфиг по переданному пути и возвращает его.
+func MustLoadByPath(path string) *Config {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		panic("Файл конфига не существует: " + path)
 	}
