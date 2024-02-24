@@ -20,4 +20,6 @@ tasks:
     (применяя все миграции вверх).
     "
     cmds:
-      - ./migrator --storage-path ./storage/sso.db --migrations-path ./migrations
+      - ./migrator
+        --storage-path ./storage/sso.db
+        --migrations-path ./migrations
