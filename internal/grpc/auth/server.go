@@ -3,11 +3,11 @@ package auth
 import (
 	"context"
 	"errors"
+	"github.com/h1lton/sso-grpc-ntc/internal/services/auth"
+	ssov1 "github.com/h1lton/sso-grpc-ntc/pkg/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"sso-grpc-ntc/internal/services/auth"
-	ssov1 "sso-grpc-ntc/pkg/api"
 )
 
 const emptyValue = 0

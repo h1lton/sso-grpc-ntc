@@ -1,10 +1,10 @@
 package app
 
 import (
+	grpcapp "github.com/h1lton/sso-grpc-ntc/internal/app/grpc"
+	"github.com/h1lton/sso-grpc-ntc/internal/services/auth"
+	"github.com/h1lton/sso-grpc-ntc/internal/storage/sqlite"
 	"log/slog"
-	grpcapp "sso-grpc-ntc/internal/app/grpc"
-	"sso-grpc-ntc/internal/services/auth"
-	"sso-grpc-ntc/internal/storage/sqlite"
 	"time"
 )
 

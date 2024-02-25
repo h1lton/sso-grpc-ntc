@@ -4,10 +4,10 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"github.com/h1lton/sso-grpc-ntc/internal/domain/models"
+	"github.com/h1lton/sso-grpc-ntc/internal/storage"
+	"github.com/h1lton/sso-grpc-ntc/pkg/operr"
 	"github.com/mattn/go-sqlite3"
-	"sso-grpc-ntc/internal/domain/models"
-	"sso-grpc-ntc/internal/storage"
-	"sso-grpc-ntc/pkg/operr"
 )
 
 type Storage struct {

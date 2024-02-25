@@ -1,14 +1,14 @@
 package main
 
 import (
+	"github.com/h1lton/sso-grpc-ntc/internal/app"
+	"github.com/h1lton/sso-grpc-ntc/internal/config"
+	"github.com/h1lton/sso-grpc-ntc/pkg/logger/handlers/slogpretty"
 	"github.com/joho/godotenv"
 	"log"
 	"log/slog"
 	"os"
 	"os/signal"
-	"sso-grpc-ntc/internal/app"
-	"sso-grpc-ntc/internal/config"
-	"sso-grpc-ntc/pkg/logger/handlers/slogpretty"
 	"syscall"
 )
 

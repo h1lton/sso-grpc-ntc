@@ -2,11 +2,11 @@ package suite
 
 import (
 	"context"
+	"github.com/h1lton/sso-grpc-ntc/internal/config"
+	ssov1 "github.com/h1lton/sso-grpc-ntc/pkg/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"net"
-	"sso-grpc-ntc/internal/config"
-	ssov1 "sso-grpc-ntc/pkg/api"
 	"strconv"
 	"testing"
 )

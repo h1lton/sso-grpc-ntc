@@ -3,13 +3,13 @@ package auth
 import (
 	"context"
 	"errors"
+	"github.com/h1lton/sso-grpc-ntc/internal/domain/models"
+	"github.com/h1lton/sso-grpc-ntc/internal/jwt"
+	"github.com/h1lton/sso-grpc-ntc/internal/storage"
+	"github.com/h1lton/sso-grpc-ntc/pkg/logger/sl"
+	"github.com/h1lton/sso-grpc-ntc/pkg/operr"
 	"golang.org/x/crypto/bcrypt"
 	"log/slog"
-	"sso-grpc-ntc/internal/domain/models"
-	"sso-grpc-ntc/internal/jwt"
-	"sso-grpc-ntc/internal/storage"
-	"sso-grpc-ntc/pkg/logger/sl"
-	"sso-grpc-ntc/pkg/operr"
 	"time"
 )
 

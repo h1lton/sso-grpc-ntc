@@ -1,4 +1,4 @@
-module sso-grpc-ntc
+module github.com/h1lton/sso-grpc-ntc
 
 go 1.22
 
